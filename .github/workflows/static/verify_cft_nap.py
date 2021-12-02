@@ -18,8 +18,7 @@ def vfy_cft_link(cft_name,exp_op):
     return False
   outputs = response["Stacks"][0]["Outputs"]
   print("Available Output Links: ")
-  for key, val in outputs:
-    print(key["OutputKey"],val["OutputValue"])
+  for key in outputs: print(key["OutputKey"],key["OutputValue"])
   try:
     for output in outputs:
       if output["OutputKey"] == "externalDnsName":
