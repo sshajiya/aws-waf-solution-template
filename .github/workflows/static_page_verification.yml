@@ -27,7 +27,7 @@ jobs:
         with:
           name: nap-cft-stack
           template: "/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yaml"
-          parameter-overrides: "sshKey=NAP_AWS"
+          parameter-overrides: "sshKey=NAP_AWS,uniqueString=myunqstr2"
           capabilities: CAPABILITY_NAMED_IAM
       - name: Customize the stack for static page verification
         run: |
