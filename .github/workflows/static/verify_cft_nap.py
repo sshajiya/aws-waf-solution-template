@@ -17,14 +17,16 @@ def vfy_cft_link(cft_name,exp_op):
     print("no results in output section")
     return False
   outputs = response["Stacks"][0]["Outputs"]
-  print("Available Output Links: ", outputs)
+  print("Available Output Links: ",)
+  for key, val in outputs:
+    print(key,val)
   try:
     for output in outputs:
       if output["OutputKey"] == "externalDnsName":
         url="http://"+output["OutputValue"]
         chk_data = requests.get(url)
         if exp_op in chk_data.text:
-          print(chk_data.text)
+          print("Template Body:\n",chk_data.text)
           return True
         else:
           print(chk_data.text)
@@ -49,7 +51,7 @@ if __name__ == '__main__':
   try:
     vfy_status=vfy_cft_link(stack_name,page_type)
     if vfy_status:
-      print("NGINX APP PROTECT ", sys.argv[1].upper() , "PAGE VERIFICATION IS COMPLETED SUCESSFULLY...")
+      print("Status: NGINX APP PROTECT ", sys.argv[1].upper() , "PAGE VERIFICATION IS COMPLETED SUCESSFULLY...")
     else:
       print("Error: NGINX APP PROTECT ", sys.argv[1].upper() , " PAGE VERIFICATION IS Failed...")
   except Exception as e:
