@@ -38,7 +38,7 @@ jobs:
           git config --global user.name "GitHub Action test"
           git add .
           git commit -m "Configuration for static page verification"
-          git push origin master
+          git push -u origin master
       - name: Sleep for a while untill the pipeline completes
         run: sleep 23m
         shell: bash     
