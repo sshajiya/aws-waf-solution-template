@@ -15,7 +15,7 @@ def vfy_cft_link(cft_name,exp_op):
   response = cf_client.describe_stacks(StackName=cft_name)
   if not response["Stacks"][0]["Outputs"]:
     print("no results in output section")
-      return False
+    return False
   outputs = response["Stacks"][0]["Outputs"]
   print("output infor for the stack: ", outputs)
   try:
