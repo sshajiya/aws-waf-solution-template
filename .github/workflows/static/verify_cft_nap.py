@@ -17,10 +17,10 @@ def vfy_cft_link(cft_name,exp_op):
     print("no results in output section")
     return False
   outputs = response["Stacks"][0]["Outputs"]
-  print("output infor for the stack: ", outputs)
+  print("output info for the stack: ", outputs)
   try:
     for output in outputs:
-      if output["OutputKey"] == "AppProtectLBDNSName":
+      if output["OutputKey"] == "externalDnsName":
         url="http://"+output["OutputValue"]
         print(url)
         chk_data = requests.get(url)
