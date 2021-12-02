@@ -44,7 +44,7 @@ jobs:
         shell: bash     
       - name: Verify Stack Static Page
         run: |
-          python ../static/verify_cft_nap.py static
+          python ../static/verify_cft_nap.py master
         env:
           STACK_NAME: nap-cft-stack
       #- name: Delete the stack using AWS actions
