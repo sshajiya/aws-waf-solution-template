@@ -17,14 +17,12 @@ def vfy_cft_link(cft_name,exp_op):
     print("no results in output section")
     return False
   outputs = response["Stacks"][0]["Outputs"]
-  print("output info for the stack: ", outputs)
+  print("Available Output Links: ", outputs)
   try:
     for output in outputs:
       if output["OutputKey"] == "externalDnsName":
         url="http://"+output["OutputValue"]
-        print(url)
         chk_data = requests.get(url)
-        print(exp_op,chk_data,chk_data.text)
         if exp_op in chk_data.text:
           print(chk_data.text)
           return True
