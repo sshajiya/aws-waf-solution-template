@@ -49,7 +49,7 @@ jobs:
           python .github/workflows/static/verify_cft_nap.py static
         env:
           STACK_NAME: nap-cft-stack
-      #- name: Delete the stack using AWS actions
-      #  run: |
-      #    aws cloudformation delete-stack --stack-name nap-cft-stack
-      #  shell: bash      
+      - name: Delete the stack using AWS actions
+        run: |
+          aws cloudformation delete-stack --stack-name nap-cft-stack
+        shell: bash      
