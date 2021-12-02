@@ -22,7 +22,9 @@ def vfy_cft_link(cft_name,exp_op):
     for output in outputs:
       if output["OutputKey"] == "AppProtectLBDNSName":
         url="http://"+output["OutputValue"]
+        print(url)
         chk_data = requests.get(url)
+        print(exp_op,chk_data,chk_data.text)
         if exp_op in chk_data.text:
           print(chk_data.text)
           return True
