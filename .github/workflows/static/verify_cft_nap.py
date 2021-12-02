@@ -17,7 +17,7 @@ def vfy_cft_link(cft_name,exp_op):
     print("no results in output section")
     return False
   outputs = response["Stacks"][0]["Outputs"]
-  print("Available Output Links: ",)
+  print("Available Output Links: ")
   for key, val in outputs:
     print(key,val)
   try:
