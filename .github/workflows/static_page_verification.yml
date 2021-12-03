@@ -27,8 +27,11 @@ jobs:
         with:
           name: nap-cft-stack
           template: "/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yaml"
-          parameter-overrides: "sshKey=NAP_AWS,uniqueString=myunqstr3"
+          parameter-overrides: "sshKey=NAP_AWS,uniqueString=muniquestr"
           capabilities: CAPABILITY_NAMED_IAM
+      - name: assuming that the configured files are under repo scripts folder
+        run: sleep 5m
+        shell: bash   
       - name: Customize the stack for static page verification
         run: |
           git clone codecommit::us-east-2://myUniqStr-repository local-dir
