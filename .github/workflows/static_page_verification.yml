@@ -27,7 +27,7 @@ jobs:
         with:
           name: nap-cft-stack
           template: "/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yaml"
-          parameter-overrides: "sshKey=NAP_AWS,uniqueString=CftUniquestr"
+          parameter-overrides: "sshKey=NAP_AWS,uniqueString=CftUnqstr"
           capabilities: CAPABILITY_NAMED_IAM
       - name: assuming that the configured files are under repo scripts folder  
         run: sleep 5m
@@ -48,6 +48,24 @@ jobs:
       - name: Verify Stack Static Page
         run: |
           python .github/workflows/static/verify_cft_nap.py static
+        env:
+          STACK_NAME: nap-cft-stack
+      - name: Customize the stack for dynamic page verification
+        run: |
+          git clone codecommit::us-east-2://myUniqStr-repository local-dir
+          cd local-dir
+          cp  $PWD/scripts/nginx.conf $PWD/files/etc/
+          git config --global user.email "random23@github.com"
+          git config --global user.name "GitHub Action test"
+          git add .
+          git commit -m "Configuration for dynamic page verification"
+          git push -u origin main
+      - name: Sleep for a while untill the pipeline completes
+        run: sleep 23m
+        shell: bash     
+      - name: Verify Stack dynamic Page
+        run: |
+          python .github/workflows/static/verify_cft_nap.py dynamic
         env:
           STACK_NAME: nap-cft-stack
       - name: Delete the stack using AWS actions
