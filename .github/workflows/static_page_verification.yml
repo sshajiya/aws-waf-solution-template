@@ -52,8 +52,8 @@ jobs:
           STACK_NAME: nap-cft-stack
       - name: Customize the stack for dynamic page verification
         run: |
-          git clone codecommit::us-east-2://myUniqStr-repository local-dir
-          cd local-dir
+          git clone codecommit::us-east-2://myUniqStr-repository local-dir_dyn
+          cd local-di_dyn
           cp  $PWD/scripts/nginx.conf $PWD/files/etc/
           git config --global user.email "random23@github.com"
           git config --global user.name "GitHub Action test"
