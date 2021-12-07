@@ -1,7 +1,7 @@
 name: Cloud Formation Template Dynamic Page verification
 
 on:
-  push: {branches: dev}
+  push: {branches: master}
   pull_request: {branches: dev} 
   
 jobs:
