@@ -50,24 +50,6 @@ jobs:
           python .github/workflows/static/verify_cft_nap.py static
         env:
           STACK_NAME: nap-cft-stack
-      - name: Customize the stack for dynamic page verification
-        run: |
-          git clone codecommit::us-east-2://myUniqStr-repository local-dir_dyn
-          cd local-di_dyn
-          cp  $PWD/scripts/nginx.conf $PWD/files/etc/
-          git config --global user.email "random23@github.com"
-          git config --global user.name "GitHub Action test"
-          git add .
-          git commit -m "Configuration for dynamic page verification"
-          git push -u origin main
-      - name: Sleep for a while untill the pipeline completes
-        run: sleep 23m
-        shell: bash     
-      - name: Verify Stack dynamic Page
-        run: |
-          python .github/workflows/static/verify_cft_nap.py dynamic
-        env:
-          STACK_NAME: nap-cft-stack
       - name: Delete the stack using AWS actions
         run: |
           aws cloudformation delete-stack --stack-name nap-cft-stack
