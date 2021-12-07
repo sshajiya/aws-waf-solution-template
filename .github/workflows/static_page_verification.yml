@@ -1,11 +1,11 @@
 name: Cloud Formation Template Static Page verification
 
 on:
-  push: {branches: master}
+  push: {branches: dev}
   pull_request: {branches: dev} 
   
 jobs:
-  cft-basic_page_chk:
+  cft-static-page-chk:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
