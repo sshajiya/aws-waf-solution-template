@@ -27,7 +27,7 @@ jobs:
         with:
           name: nap-cft-stack
           template: "/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yaml"
-          parameter-overrides: "sshKey=NAP_AWS,uniqueString=CftUnqstringNew"
+          parameter-overrides: "sshKey=NAP_AWS,uniqueString=CftStr"
           capabilities: CAPABILITY_NAMED_IAM
       - name: assuming that the configured files are under repo scripts folder  
         run: sleep 5m
