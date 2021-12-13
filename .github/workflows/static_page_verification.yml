@@ -27,14 +27,14 @@ jobs:
         with:
           name: nap-cft-stack
           template: "/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yaml"
-          parameter-overrides: "sshKey=NAP_AWS,uniqueString=CftStrNew"
+          parameter-overrides: "sshKey=NAP_AWS,uniqueString=CftSt"
           capabilities: CAPABILITY_NAMED_IAM
       - name: assuming that the configured files are under repo scripts folder  
         run: sleep 5m
         shell: bash   
       - name: Customize the stack for static page verification
         run: |
-          git clone codecommit::us-east-2://CftStrNew-repository local-dir
+          git clone codecommit::us-east-2://CftSt-repository local-dir
           cd local-dir
           cp  $PWD/scripts/appspec.yml $PWD/
           git config --global user.email "random23@github.com"
