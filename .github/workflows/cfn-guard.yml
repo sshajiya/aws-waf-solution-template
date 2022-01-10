@@ -36,3 +36,4 @@ jobs:
           ls -lrt
           cd modules/quickstart
           ls -lrt
+          ./cfn-guard-linux/cfn-guard check -t modules/quickstart/nap-autoscale-ubuntu-dev.yaml -r modules/quickstart/nap-autoscale.ruleset 
