@@ -29,9 +29,3 @@ jobs:
         run: |
           wget https://github.com/aws-cloudformation/cloudformation-guard/releases/download/${CFN_GUARD_VERSION}/cfn-guard-linux-${CFN_GUARD_VERSION}.tar.gz
           tar -xvf cfn-guard-linux-${CFN_GUARD_VERSION}.tar.gz
-
-      - name: check network template with CloudFormation Guard
-        env: 
-          TEMPLATE: network
-        run: |
-          ./cfn-guard-linux/cfn-guard check --template ./modules/quickstart/nap-autoscale-ubuntu-dev.yml --rule_set ./modules/quickstart/nap-autoscale_ruleset
