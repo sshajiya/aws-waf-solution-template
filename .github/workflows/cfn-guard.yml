@@ -31,5 +31,7 @@ jobs:
           tar -xvf cfn-guard-linux-${CFN_GUARD_VERSION}.tar.gz
       - name: check the version
         run: |
+          ls -lrt
           ./cfn-guard-linux/cfn-guard rulegen modules/quickstart/nap-autoscale-ubuntu-dev.yaml > modules/quickstart/nap-autoscale.ruleset 
+          ls -lrt
           ./cfn-guard-linux/cfn-guard check -t modules/quickstart/nap-autoscale-ubuntu-dev.yaml -r modules/quickstart/nap-autoscale.ruleset 
