@@ -31,4 +31,4 @@ jobs:
           tar -xvf cfn-guard-linux-${CFN_GUARD_VERSION}.tar.gz
       - name: check network template with CloudFormation Guard
         run: |
-          ./cfn-guard-linux/cfn-guard check --template /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yml --rule_set /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale_ruleset
+          /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/cfn-guard-linux/cfn-guard check --template /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yml --rule_set /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale_ruleset
