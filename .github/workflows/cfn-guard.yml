@@ -34,3 +34,5 @@ jobs:
           #/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/cfn-guard-linux/cfn-guard check --template /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yml --rule_set /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale_ruleset
           ./cfn-guard-linux/cfn-guard -V
           ls -lrt
+          cd modules/quickstart
+          ls -lrt
