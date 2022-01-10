@@ -31,16 +31,4 @@ jobs:
           tar -xvf cfn-guard-linux-${CFN_GUARD_VERSION}.tar.gz
       - name: check the version
         run: |
-          #/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/cfn-guard-linux/cfn-guard check --template /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yml --rule_set /home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale_ruleset
-          ./cfn-guard-linux/cfn-guard -V
-          pwd
-          ls -lrt
-          cd modules/quickstart
-          ls -lrt
-          pwd
-          cd ../..
-          pwd
-          ./cfn-guard-linux/cfn-guard -V
-          #./cfn-guard-linux/cfn-guard  rulegen modules/quickstart/nap-autoscale-ubuntu-dev.yaml >cfn.ruleset
-          #ls -lrt
           ./cfn-guard-linux/cfn-guard check -t modules/quickstart/nap-autoscale-ubuntu-dev.yaml -r modules/quickstart/nap-autoscale.ruleset 
