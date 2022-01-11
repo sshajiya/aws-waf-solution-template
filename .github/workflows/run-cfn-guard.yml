@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -22,14 +21,13 @@ jobs:
           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
           aws-region: ${{secrets.AWS_REGION}}
-
-      - name: install CloudFormation Guard
+      - name: Install CloudFormation Guard
         env: 
           CFN_GUARD_VERSION: 1.0.0
         run: |
           wget https://github.com/aws-cloudformation/cloudformation-guard/releases/download/${CFN_GUARD_VERSION}/cfn-guard-linux-${CFN_GUARD_VERSION}.tar.gz
           tar -xvf cfn-guard-linux-${CFN_GUARD_VERSION}.tar.gz
-      - name: check the version
+      - name: Generate the ruleset and Check the compliance with CFT
         run: |
           ls -lrt
           ./cfn-guard-linux/cfn-guard rulegen modules/quickstart/nap-autoscale-ubuntu-dev.yaml > modules/quickstart/nap-autoscale.ruleset 
