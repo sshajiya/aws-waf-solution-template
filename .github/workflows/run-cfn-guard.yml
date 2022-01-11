@@ -30,4 +30,5 @@ jobs:
       - name: Generate the ruleset and Check the compliance with CFT
         run: |
           ./cfn-guard-linux/cfn-guard rulegen modules/quickstart/nap-autoscale-ubuntu-dev.yaml > modules/quickstart/nap-autoscale.ruleset 
+          cat modules/quickstart/nap-autoscale.ruleset
           ./cfn-guard-linux/cfn-guard check -t modules/quickstart/nap-autoscale-ubuntu-dev.yaml -r modules/quickstart/nap-autoscale.ruleset 
