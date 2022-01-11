@@ -1,6 +1,6 @@
 name: Compliance check with CloudFormation Guard
 on:
-  push: {branches: dev}
+  push: {branches: master}
 
 defaults:
   run:
