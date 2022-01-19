@@ -35,5 +35,5 @@ jobs:
           ./cfn-guard-linux/cfn-guard check -t modules/quickstart/nap-autoscale-ubuntu-dev.yaml -r modules/quickstart/nap-autoscale.ruleset 
           ./cfn-guard-linux/cfn-guard check -t modules/network/network.yaml -r modules/rulesets/network.ruleset
           ./cfn-guard-linux/cfn-guard check -t modules/pipeline/pipeline.yaml -r modules/rulesets/pipeline.ruleset
-          ./cfn-guard-linux/cfn-guard check -t modules/telemetry/telemetry.yaml -r modules/rulesets/telemetry.ruleset
+          ./cfn-guard-linux/cfn-guard check -t modules/telemetry/nap-autoscale-telemetry.yaml -r modules/rulesets/telemetry.ruleset
           #./cfn-guard-linux/cfn-guard check -t modules/autoscale/nginx-app-protect-ubuntu-18.04/nap-autoscale.yaml -r modules/rulesets/autoscale.ruleset
