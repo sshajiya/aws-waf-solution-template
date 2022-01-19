@@ -1,0 +1,40 @@
+AWS::AutoScaling::AutoScalingGroup AutoScalingGroupName == ${uniqueString}-asg
+AWS::AutoScaling::AutoScalingGroup Cooldown == 1500
+AWS::AutoScaling::AutoScalingGroup HealthCheckGracePeriod == 1500
+AWS::AutoScaling::AutoScalingGroup HealthCheckType == EC2
+AWS::AutoScaling::AutoScalingGroup LaunchConfigurationName == NapLaunchConfig
+AWS::AutoScaling::AutoScalingGroup MaxSize == scalingMaxSize
+AWS::AutoScaling::AutoScalingGroup MetricsCollection == [{"Granularity":"1Minute","Metrics":["GroupMinSize","GroupMaxSize","GroupDesiredCapacity","GroupInServiceInstances","GroupTotalInstances"]}]
+AWS::AutoScaling::AutoScalingGroup MinSize == scalingMinSize
+AWS::AutoScaling::AutoScalingGroup Tags == [{"Key":"costcenter","PropagateAtLaunch":true,"Value":"cost"},{"Key":"environment","PropagateAtLaunch":true,"Value":"environment"},{"Key":"group","PropagateAtLaunch":true,"Value":"group"},{"Key":"Name","PropagateAtLaunch":true,"Value":"${uniqueString}-asg"},{"Key":"owner","PropagateAtLaunch":true,"Value":"owner"}]
+AWS::AutoScaling::AutoScalingGroup TargetGroupARNs == [["externalTargetGroupHttpProvided","externalTargetGroupHttp","AWS::NoValue"]]
+AWS::AutoScaling::AutoScalingGroup VPCZoneIdentifier == subnets
+AWS::AutoScaling::LaunchConfiguration AssociatePublicIpAddress == provisionPublicIp
+AWS::AutoScaling::LaunchConfiguration IamInstanceProfile == NapInstanceProfile
+AWS::AutoScaling::LaunchConfiguration ImageId == imageId
+AWS::AutoScaling::LaunchConfiguration InstanceMonitoring == false
+AWS::AutoScaling::LaunchConfiguration InstanceType == instanceType
+AWS::AutoScaling::LaunchConfiguration KeyName == sshKey
+AWS::AutoScaling::LaunchConfiguration SecurityGroups == ["napExternalSecurityGroup"]
+AWS::AutoScaling::LaunchConfiguration UserData == {"Fn::Base64":"#!/bin/bash\nsudo apt-get update -y\n# Install cloudformation agent\napt-get install -y python-pip\napt-get install -y python-setuptools\nmkdir -p /opt/aws/bin\npython /usr/lib/python2.7/dist-packages/easy_install.py --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz\n\n# Install cloudwatch agent\nwget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb\nsudo dpkg -i -E ./amazon-cloudwatch-agent.deb\n\n# Start cfn-init\n/opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource NapLaunchConfig --configsets default --region ${AWS::Region}\n\n# Install CodeDeploy Agent\nsudo apt install ruby -y\nwget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install\nchmod +x ./install\nsudo ./install auto\n\n# All done so signal success\n/opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource NapASG --region ${AWS::Region}\n"}
+AWS::AutoScaling::ScalingPolicy AdjustmentType == ChangeInCapacity
+AWS::AutoScaling::ScalingPolicy AutoScalingGroupName == NapASG
+AWS::AutoScaling::ScalingPolicy Cooldown == 600
+AWS::AutoScaling::ScalingPolicy ScalingAdjustment == -1 |OR| AWS::AutoScaling::ScalingPolicy ScalingAdjustment == 2
+AWS::CloudWatch::Alarm AlarmActions == ["ScaleDownPolicy"] |OR| AWS::CloudWatch::Alarm AlarmActions == ["ScaleUpPolicy"]
+AWS::CloudWatch::Alarm AlarmDescription == Scale-down if CPU < 70% for 10 minutes |OR| AWS::CloudWatch::Alarm AlarmDescription == Scale-up if CPU > 90% for 10 minutes
+AWS::CloudWatch::Alarm AlarmName == ${AWS::StackName}-AsgCpuAlarmHigh |OR| AWS::CloudWatch::Alarm AlarmName == ${AWS::StackName}-AsgCpuAlarmLow
+AWS::CloudWatch::Alarm ComparisonOperator == GreaterThanOrEqualToThreshold |OR| AWS::CloudWatch::Alarm ComparisonOperator == GreaterThanThreshold
+AWS::CloudWatch::Alarm Dimensions == [{"Name":"AutoScalingGroupName","Value":"NapASG"}]
+AWS::CloudWatch::Alarm EvaluationPeriods == 2
+AWS::CloudWatch::Alarm MetricName == CPUUtilization
+AWS::CloudWatch::Alarm Metrics == [{"Expression":"IF(tot1 > min1 AND cpu1 < 70, 1, 0)","Id":"exp1","ReturnData":true},{"Id":"min1","MetricStat":{"Metric":{"Dimensions":[{"Name":"AutoScalingGroupName","Value":"NapASG"}],"MetricName":"GroupDesiredCapacity","Namespace":"AWS/AutoScaling"},"Period":300,"Stat":"Minimum"},"ReturnData":false},{"Id":"tot1","MetricStat":{"Metric":{"Dimensions":[{"Name":"AutoScalingGroupName","Value":"NapASG"}],"MetricName":"GroupTotalInstances","Namespace":"AWS/AutoScaling"},"Period":300,"Stat":"Minimum"},"ReturnData":false},{"Id":"cpu1","MetricStat":{"Metric":{"Dimensions":[{"Name":"AutoScalingGroupName","Value":"NapASG"}],"MetricName":"CPUUtilization","Namespace":"AWS/EC2"},"Period":300,"Stat":"Average"},"ReturnData":false}]
+AWS::CloudWatch::Alarm Namespace == AWS/EC2
+AWS::CloudWatch::Alarm Period == 300
+AWS::CloudWatch::Alarm Statistic == Average
+AWS::CloudWatch::Alarm Threshold == 1 |OR| AWS::CloudWatch::Alarm Threshold == 90
+AWS::IAM::InstanceProfile Path == /
+AWS::IAM::InstanceProfile Roles == ["NapIAMRole"]
+AWS::IAM::Role AssumeRolePolicyDocument == {"Statement":[{"Action":["sts:AssumeRole"],"Effect":"Allow","Principal":{"Service":["ec2.amazonaws.com"]}}],"Version":"2012-10-17"}
+AWS::IAM::Role Policies == [{"PolicyDocument":{"Statement":[{"Action":["ec2:DescribeInstances","autoscaling:DescribeAutoScalingGroups","ec2:DescribeTags","ec2:DescribeVolumes"],"Effect":"Allow","Resource":"*"}],"Version":"2012-10-17"},"PolicyName":"${uniqueString}-ec2-policy"}]
+AWS::IAM::Role Tags == [{"Key":"Name","Value":"${uniqueString}-ec2-access-role"},{"Key":"costcenter","Value":"cost"},{"Key":"environment","Value":"environment"},{"Key":"group","Value":"group"},{"Key":"owner","Value":"owner"}]
