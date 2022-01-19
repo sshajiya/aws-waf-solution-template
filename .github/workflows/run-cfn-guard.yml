@@ -31,9 +31,12 @@ jobs:
         run: |
           ./cfn-guard-linux/cfn-guard rulegen modules/quickstart/nap-autoscale-ubuntu-dev.yaml > modules/quickstart/nap-autoscale.ruleset 
           echo "Generated Ruleset for CFT"
-          cat modules/quickstart/nap-autoscale.ruleset
           ./cfn-guard-linux/cfn-guard check -t modules/quickstart/nap-autoscale-ubuntu-dev.yaml -r modules/quickstart/nap-autoscale.ruleset 
+          echo "Validate network template with customized ruleset"
           ./cfn-guard-linux/cfn-guard check -t modules/network/network.yaml -r modules/rulesets/network.ruleset
+          echo "Validate pipeline template with customized ruleset"
           ./cfn-guard-linux/cfn-guard check -t modules/pipeline/pipeline.yaml -r modules/rulesets/pipeline.ruleset
+          echo "Validate telemetry template with customized ruleset"
           ./cfn-guard-linux/cfn-guard check -t modules/telemetry/nap-autoscale-telemetry.yaml -r modules/rulesets/telemetry.ruleset
+          echo "Validate autoscale template with customized ruleset"
           ./cfn-guard-linux/cfn-guard check -t modules/autoscale/nginx-app-protect-ubuntu-18.04/nap-autoscale.yaml -r modules/rulesets/autoscale.ruleset
