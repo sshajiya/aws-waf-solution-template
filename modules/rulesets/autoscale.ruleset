@@ -16,7 +16,6 @@ AWS::AutoScaling::LaunchConfiguration InstanceMonitoring == false
 AWS::AutoScaling::LaunchConfiguration InstanceType == instanceType
 AWS::AutoScaling::LaunchConfiguration KeyName == sshKey
 AWS::AutoScaling::LaunchConfiguration SecurityGroups == ["napExternalSecurityGroup"]
-AWS::AutoScaling::LaunchConfiguration UserData == {"Fn::Base64":"#!/bin/bash\nsudo apt-get update -y\n# Install cloudformation agent\napt-get install -y python-pip\napt-get install -y python-setuptools\nmkdir -p /opt/aws/bin\npython /usr/lib/python2.7/dist-packages/easy_install.py --script-dir /opt/aws/bin https://s3.amazonaws.com/cloudformation-examples/aws-cfn-bootstrap-latest.tar.gz\n\n# Install cloudwatch agent\nwget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb\nsudo dpkg -i -E ./amazon-cloudwatch-agent.deb\n\n# Start cfn-init\n/opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource NapLaunchConfig --configsets default --region ${AWS::Region}\n\n# Install CodeDeploy Agent\nsudo apt install ruby -y\nwget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install\nchmod +x ./install\nsudo ./install auto\n\n# All done so signal success\n/opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource NapASG --region ${AWS::Region}\n"}
 AWS::AutoScaling::ScalingPolicy AdjustmentType == ChangeInCapacity
 AWS::AutoScaling::ScalingPolicy AutoScalingGroupName == NapASG
 AWS::AutoScaling::ScalingPolicy Cooldown == 600
