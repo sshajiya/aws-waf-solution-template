@@ -27,11 +27,11 @@ jobs:
         with:
           name: nap-cft-stack
           template: "/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yaml"
-          parameter-overrides: "sshKey=TEST_NAP_2,uniqueString=CftStt"
+          parameter-overrides: "sshKey=TEST_NAP_2,uniqueString=CftSt"
           capabilities: CAPABILITY_NAMED_IAM
-      #- name: 5mints sleep time to manually copy the appspec.yml and index.html files from repo scripts folder  
-      #  run: sleep 5m
-      #  shell: bash   
+      - name: 5mints sleep time to manually copy the appspec.yml and index.html files from repo scripts folder  
+        run: sleep 5m
+        shell: bash   
       - name: Customize the stack for static page verification  
         run: |
           git clone codecommit::us-east-2://CftStt-repository local-dir
