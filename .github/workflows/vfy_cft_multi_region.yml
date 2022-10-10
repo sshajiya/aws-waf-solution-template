@@ -1,4 +1,4 @@
-name: Cloud Formation Template
+name: Cloud Formation Template Regression Run
 
 on:
   push: {branches: master}
@@ -16,7 +16,7 @@ jobs:
           aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
           aws-region: ${{secrets.AWS_REGION}}
-      - name: Launch the Stack
+      - name: Launch the Stack 
         uses: ShahradR/action-taskcat@v1
         with:
           commands: test run
