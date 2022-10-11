@@ -15,7 +15,7 @@ jobs:
           python -m pip install --user boto3
           python -m pip install --user requests
           pip install git-remote-codecommit
-      - name: Configure AWS Credentials  
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
@@ -25,16 +25,16 @@ jobs:
       - name: Creating Stack with CF template 
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: nap-cft-stack
+          name: nap-cft-stack-reg
           template: "/home/runner/work/aws-waf-solution-template/aws-waf-solution-template/modules/quickstart/nap-autoscale-ubuntu-dev.yaml"
-          parameter-overrides: "sshKey=TEST_NAP_2,uniqueString=CftSt"
+          parameter-overrides: "sshKey=TEST_NAP_2,uniqueString=CftStreg"
           capabilities: CAPABILITY_NAMED_IAM
       - name: 5mints sleep time to manually copy the appspec.yml and index.html files from repo scripts folder  
         run: sleep 5m
         shell: bash   
       - name: Customize the stack for static page verification  
         run: |
-          git clone codecommit::us-east-2://CftStt-repository local-dir
+          git clone codecommit::us-east-2://CftStreg-repository local-dir
           cd local-dir
           cp  $PWD/scripts/appspec.yml $PWD/
           git config --global user.email "random23@github.com"
@@ -52,5 +52,5 @@ jobs:
           STACK_NAME: nap-cft-stack
       - name: Delete the stack using AWS actions
         run: |
-          aws cloudformation delete-stack --stack-name nap-cft-stack
+          aws cloudformation delete-stack --stack-name nap-cft-stack-reg
         shell: bash          
